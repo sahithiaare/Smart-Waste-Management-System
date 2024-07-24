@@ -1,0 +1,45 @@
+#define echoPin 7 // attach pin D2 Arduino to pin Echo of HC-SR04
+#define trigPin 8//attach pin D3 Arduino to pin Trig of HC-SR04
+
+long duration; 
+int distance; 
+
+void setup()
+ {
+pinMode(trigPin, OUTPUT); 
+pinMode(echoPin, INPUT); 
+pinMode(10,OUTPUT);
+Serial.begin(9600); 
+Serial.println("Ultrasonic Sensor HC-SR04 Test"); 
+Serial.println("with Arduino UNO R3");
+}
+void loop()
+ {
+
+digitalWrite(trigPin, LOW);
+delayMicroseconds(100);
+
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(100);
+digitalWrite(trigPin, LOW);
+
+  duration = pulseIn(echoPin, HIGH);
+
+  distance = duration * 0.034 / 2; 
+
+Serial.print("Distance: ");
+Serial.print(distance);
+Serial.println(" cm");
+  if(distance<=10)
+  {
+digitalWrite(10,HIGH);
+Serial.println("bin is full");
+    delay(10);
+  }
+  else
+  {
+digitalWrite(10,LOW);
+Serial.println("bin is not reached to peak");
+    delay(10);
+  }
+}
